@@ -1,1 +1,1 @@
-web: gunicorn ipfinder.wsgi --log-file -
+web: gunicorn ipfinder.wsgi
