@@ -1,1 +1,1 @@
-web: gunicorn ipfinder.wsgi
+gunicorn ipfinder.wsgi:application --preload --workers 1
