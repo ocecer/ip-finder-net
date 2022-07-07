@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IP Lookup Service{%endblock title %}
+{% block content %}
+<!-- Header -->
+<header id="header__home">
+  <div class="container">
+    {% include 'partials/_navbar.html' %}
+    <div class="header-content py-2">
+      <div class="ip-search">
+        <form class="ip-search-form" action="{% url 'index' %}" method="post">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="IP Address"
+          />
+          <button class="btn" type="submit">IP Lookup</button>
+        </form>
+      </div>
+      <div class="ip-result mt-4">
+        <div class="text-center">
+          <h2>Your Ip Address {{data.ip}}</h2>
+        </div>
+        <div class="ip-result__short-info">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>IP Version</td>
+                <td>{{data.version}}</td>
+              </tr>
+              <tr>
+                <td>Region</td>
+                <td>{{data.region}}</td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>{{data.city}}</td>
+              </tr>
+              <tr>
+                <td>Country</td>
+                <td>{{data.country}} | {{data.country_name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<section id="home__all-info" class="py-3">
+  <div class="container">
+    <table class="table table-strip table-hover">
+      <tbody>
+        <tr>
+          <td>IP Address</td>
+          <td>{{data.ip}}</td>
+        </tr>
+        <tr>
+          <td>IP Version</td>
+          <td>{{data.version}}</td>
+        </tr>
+        <tr>
+          <td>ISP</td>
+          <td>{{data.org}}</td>
+        </tr>
+        <tr>
+          <td>City</td>
+          <td>{{data.city}}</td>
+        </tr>
+        <tr>
+          <td>Postal Code</td>
+          <td>{{data.postal}}</td>
+        </tr>
+        <tr>
+          <td>Region</td>
+          <td>{{data.region}}</td>
+        </tr>
+        <tr>
+          <td>Region Code</td>
+          <td>{{data.region_code}}</td>
+        </tr>
+        <tr>
+          <td>Country</td>
+          <td>{{data.country_code}} | {{data.country_name}}</td>
+        </tr>
+        <tr>
+          <td>Country Code ISO3</td>
+          <td>{{data.country_code_iso3}}</td>
+        </tr>
+        <tr>
+          <td>Population</td>
+          <td>{{data.country_population}}</td>
+        </tr>
+        <tr>
+          <td>Capital</td>
+          <td>{{data.country_capital}}</td>
+        </tr>
+        <tr>
+          <td>Continent</td>
+          <td>{{data.continent_code}}</td>
+        </tr>
+        <tr>
+          <td>Timezone</td>
+          <td>{{data.timezone}} | {{data.utc_offset}}</td>
+        </tr>
+        <tr>
+          <td>Country Calling Code</td>
+          <td>{{data.country_calling_code}}</td>
+        </tr>
+        <tr>
+          <td>Currency</td>
+          <td>{{data.currency}} | {{data.currency_name}}</td>
+        </tr>
+        <tr>
+          <td>TLD</td>
+          <td>{{data.country_tld}}</td>
+        </tr>
+        <tr>
+          <td>Language</td>
+          <td>{{data.languages}}</td>
+        </tr>
+        <tr>
+          <td>Latitude</td>
+          <td>{{data.latitude}}</td>
+        </tr>
+        <tr>
+          <td>longitude</td>
+          <td>{{data.longitude}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% include 'partials/_footer.html' %}
+{% endblock content %}

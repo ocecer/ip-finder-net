@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block bootstrap %}
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">{% endblock bootstrap %}
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'assets/css/blog.css' %}">{% endblock css_files %}
+{% block title %}Sign in{%endblock title %}
+{% block content %}
+<!-- header -->
+{% include 'partials/_header__inner.html' %}
+<!-- section -->
+<div class="container mt-3">
+    <div class="col p-5">
+        <form action="{% url 'signin' %}" method="POST">
+            {%csrf_token%}
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+            {% endif %}
+            <div class="mb-3 px-5">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control">
+            </div>
+            <div class="mb-3 px-5">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="px-5">
+                <input type="submit" value="Sign in" class="btn btn-primary ">
+            </div>
+
+        </form>
+    </div>
+</div>
+<!-- Footer -->
+{% include 'partials/_footer.html' %}
+{% endblock content %}
