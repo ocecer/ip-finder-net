@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% block script %}
+<script src="https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js"></script>
+{% endblock script %}
+{% block css_files %}
+<link href="https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css" rel="stylesheet" />
+{% endblock css_files %}
 {% block title %}IP Lookup Service{%endblock title %}
 {% block content %}
 <!-- Header -->
@@ -7,23 +13,21 @@
   <div class="container">
     {% include 'partials/_navbar.html' %}
     <div class="header-content py-2">
-      <div class="ip-search">
+      <div class="ip-search mt-4">
         <form class="ip-search-form" action="{% url 'index' %}" method="post">
           {% csrf_token %}
-          <input
-            type="text"
-            name="search"
-            class="form-control"
-            placeholder="IP Address"
-          />
+          <input type="text" name="search" class="form-control" placeholder="IP Address" />
           <button class="btn" type="submit">IP Lookup</button>
         </form>
+        <p class="text-white">Find the geolocation of any IP address including IP version, ISP, city and country
+          information, latitude,
+          longitude and more.</p>
       </div>
-      <div class="ip-result mt-4">
+      <div class="ip-result mt-5">
         <div class="text-center">
-          <h2>Your Ip Address {{data.ip}}</h2>
+          <h2>Ip Address {{data.ip}}</h2>
         </div>
-        <div class="ip-result__short-info">
+        <div class="ip-result__short-info mt-2">
           <table class="table table-hover">
             <tbody>
               <tr>
@@ -49,6 +53,7 @@
     </div>
   </div>
 </header>
+
 <section id="home__all-info" class="py-3">
   <div class="container">
     <table class="table table-strip table-hover">
@@ -126,13 +131,36 @@
           <td>{{data.latitude}}</td>
         </tr>
         <tr>
-          <td>longitude</td>
+          <td>Longitude</td>
           <td>{{data.longitude}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </section>
+
+<section id="home__map">
+  <div class="container mb-3">
+    <div id="map" width="100%" style="height: 400px"></div>
+  </div>
+</section>
+
+<script>
+  mapboxgl.accessToken = "{{mapbox_access_token}}";
+  var map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v10",
+    zoom: 9,
+    cooperativeGestures: true,
+    center: [{{ data.longitude }}, {{ data.latitude }}]
+  });
+
+  map.addControl(new mapboxgl.FullscreenControl());
+
+  const marker1 = new mapboxgl.Marker()
+    .setLngLat([{{ data.longitude }}, {{ data.latitude }}])
+    .addTo(map);
+</script>
 
 {% include 'partials/_footer.html' %}
 {% endblock content %}

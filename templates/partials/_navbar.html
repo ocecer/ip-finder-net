@@ -5,17 +5,17 @@
   <ul class="main-nav__items">
     <li><a href="{% url 'index' %}" class="active">Home</a></li>
     <li><a href="{% url 'about' %}">About</a></li>
-    <li><a href="{% url 'blog' %}">Blog</a></li>
+    <!-- <li><a href="{% url 'blog' %}">Blog</a></li> -->
     <li><a href="{% url 'contact' %}">Contact</a></li>
   </ul>
-  <ul class="main-nav__items nav-account">
-    {% if user.is_authenticated %}
+  <!-- <ul class="main-nav__items nav-account">
+    {% if user.is_authenticated %} -->
       <!-- <li><a href="">My account {{user.username}}</a></li> -->
-      <li><a href="">My account</a></li>
+      <!-- <li><a href="">My account</a></li>
       <li><a href="{% url 'logout' %}">Log out</a></li>
     {% else %}
       <li><a href="{% url 'signin' %}">Sign in</a></li>
       <li><a href="{% url 'signup' %}">Sign up</a></li>
     {% endif %}
-  </ul>
+  </ul> -->
 </nav>

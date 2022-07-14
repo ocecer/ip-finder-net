@@ -10,12 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os
-import dj_database_url
-from pathlib import Path
 from os import getenv
-import django_heroku
-
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +26,7 @@ SECRET_KEY = getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("IS_DEVELOPMENT", True)
 
-ALLOWED_HOSTS = [getenv("APP_HOST"), "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "127.0.0.0", "localhost")
 
 
 # Application definition
@@ -48,9 +44,7 @@ INSTALLED_APPS = [
     'ckeditor'
 ]
 
-# added first 'whitenoise.middleware.WhiteNoiseMiddleware' for heroku
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -138,20 +132,3 @@ MEDIA_URL = "/images/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# # heroku changes
-# PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_URL = '/static/'
-
-# # Extra lookup directories for collectstatic to find static files
-# STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),)
-
-# #  Add configuration for static files storage using whitenoise
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-# prod_db = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(prod_db)
-
-# # Activate Django-Heroku.
-# django_heroku.settings(locals())
