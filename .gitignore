@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__
+.vscode
+db.sqlite3
+article_images
+media
+.env
+production.sqlite3
+logs
+node_modules
+scss
+test.html

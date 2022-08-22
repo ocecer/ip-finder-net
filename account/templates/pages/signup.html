@@ -1,0 +1,14 @@
+{% extends 'blog-base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Signup{% endblock title %}
+
+
+{% block content %}
+{% include 'components/message-success.html' %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-success" value="Signup">
+</form>
+
+{% endblock content %}

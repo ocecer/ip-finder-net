@@ -1,0 +1,17 @@
+{% extends 'blog-base.html' %}
+
+{% block title%}{{profile.username}}{%endblock%}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+            {% if profil.get_full_name == '' %}
+            Full Name: N/A
+            {%else%}
+            Full Name: {{profile.get_full_name}}
+            {% endif%}
+        </div>
+    </div>
+</div>
+{%endblock%}

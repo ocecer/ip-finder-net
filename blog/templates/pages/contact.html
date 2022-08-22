@@ -1,0 +1,14 @@
+{% extends 'blog-base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Contact{% endblock title %}
+
+
+{% block content %}
+<form method="POST">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-success" value="Send">
+</form>
+
+{% endblock content %}

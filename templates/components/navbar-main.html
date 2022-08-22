@@ -1,0 +1,72 @@
+<!-- <header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+      </form>
+
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2">Login</button>
+        <button type="button" class="btn btn-warning">Sign-up</button>
+      </div>
+    </div>
+  </div>
+</header> -->
+
+<!-- {% load static %}
+<nav class="main-nav">
+  <img src="{% static 'img/logo.png' %}" class="main-nav__logo" alt="" />
+  <ul class="main-nav__items">
+    <li><a href="{% url 'home' %}" class="active">Home</a></li>
+    <li><a href="{% url 'blog' %}">Blog</a></li>
+    <li><a href="{% url 'about-us' %}">About</a></li>
+    <li><a href="{% url 'contact' %}">Contact</a></li>
+  </ul> -->
+  <!-- <ul class="main-nav__items nav-account">
+    {% if user.is_authenticated %} -->
+      <!-- <li><a href="">My account {{user.username}}</a></li> -->
+      <!-- <li><a href="">My account</a></li>
+      <li><a href="{% url 'logout' %}">Log out</a></li>
+    {% else %}
+      <li><a href="{% url 'signin' %}">Sign in</a></li>
+      <li><a href="{% url 'signup' %}">Sign up</a></li>
+    {% endif %}
+  </ul> -->
+<!-- </nav> -->
+
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark navbar-transparent">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" class="main-nav__logo"
+        alt="" /></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'blog' %}">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'about-us' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'contact' %}">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

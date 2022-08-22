@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/blog-bs.css' %}" rel="stylesheet" />
+{% endblock css %}
+{% block base %}
+{% include 'components/navbar-blog.html' %}
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-sm-9">{% block content %}{% endblock content %}</div>
+    <div class="col-sm-3">
+    {% include 'components/sidebar.html' %}
+    {% include 'components/user-area.html' %}
+  </div>
+  </div>
+</div>
+
+{% include 'components/footer.html' %}
+{% endblock base %}

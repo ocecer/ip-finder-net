@@ -1,0 +1,14 @@
+{% extends 'blog-base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Delete Post{% endblock title %}
+
+
+{% block content %}
+<form method="POST">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    <p>Are you sure to delete the post?</p>
+    <input type="submit" class="btn btn-success" value="Delete">
+</form>
+
+{% endblock content %}

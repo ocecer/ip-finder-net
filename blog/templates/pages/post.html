@@ -1,0 +1,114 @@
+{% extends 'blog-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}{{article.title}}{% endblock title %}
+
+{% block content %}
+<div class="card mb-3" style="max-width: 100%">
+  <div class="row g-0">
+    <div class="col-md-12">
+      <img src="{{article.articleImage.url}}" class="img img-fluid rounded-start" alt="..." />
+    </div>
+    <div class="col-md-12">
+      <div class="card-body">
+        <h5 class="card-title ">{{ article.title }}</h5>
+        <p class="card-text"><small class="text-muted">Author: <a href="{% url 'profile' username=article.author.username %}">{{article.author.username}}</a></small></p>
+        <p class="card-text">
+          {{article.content|safe}}
+        </p>
+        <p class="card-text">
+          <small class="text-muted">Last edit: {{ article.editDate|timesince}} ago</small>
+
+          {% if request.user == article.author %}
+        <p>
+          <a href="{% url 'update-post' slug=article.slug %}" class="btn btn-sm btn-warning">Update</a>
+          <a href="{% url 'delete-post' slug=article.slug %}" class="btn btn-sm btn-danger">Delete</a>
+        </p>
+        {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    {% if articles.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ articles.previous_page_number }}">Previous</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Previous</a>
+    </li>
+    {% endif %}
+
+    {% for page_nr in articles.paginator.page_range %}
+    {% if articles.number == page_nr %}
+    <li class="page-item"><a class="page-link active" href="?page={{ articles.number }}">{{ articles.number }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_nr }}">{{page_nr}}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if articles.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ articles.next_page_number }}">Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Next</a>
+    </li>
+    {% endif %}
+
+
+  </ul>
+</nav> -->
+
+<h5>Comments</h5>
+
+{% if request.user.is_authenticated %}
+<form method="POST">
+  {% csrf_token %}
+  {{ createCommentForm|crispy }}
+  <input type="submit" value="Comment" class='btn btn-sm btn-primary mb-3'>
+</form>
+{% else %}
+<p>Please login to leave a comment</p>
+{% endif %}
+
+{% include 'components/message-success.html' %}
+
+{% for comment in comments %}
+<div class="card mb-3" style="max-width: 100%;">
+  <div class="row g-0">
+    <div class="col-md-2">
+      {% if comment.author.avatar %}
+      <img src="{{comment.author.avatar.url}}" class="img-thumbnail img-fluid rounded-start" style="max-height:100px;"
+        alt="...">
+      {% else %}
+      <img src="{% static 'img/no-avatar.png' %}" class="img-thumbnail img-fluid rounded-start justify-content-center"
+        style="max-height:100px;" alt="...">
+      {% endif %}
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title">{{comment.auhor.username}}</h5>
+        <p class="card-text">{{comment.comment}}</p>
+        <p class="card-text"><small class="text-muted">{{comment.editDate|timesince}} ago</small></p>
+
+        {% if request.user == comment.author or request.user == article.author %}
+        <p>
+          <a href="{% url 'delete-comment' id=comment.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% empty %}
+<p>There is not any comment.</p>
+{% endfor %}
+
+{% endblock content %}

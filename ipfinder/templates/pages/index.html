@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+<link href="{% static 'css/blog-bs.css' %}" rel="stylesheet" />
+<link href="{% static 'css/main.css' %}" rel="stylesheet" />
+{% endblock css %}
+{% block title %}IP-Finder{% endblock title %}
+{% block base %}
+
+<header id="header__home">
+    {% include 'components/navbar-main.html' %}
+    <div class="container">
+        <div class="header-content py-2">
+            <div class="ip-search">
+                <form class="ip-search-form" action="{% url 'home' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="search" class="form-control" placeholder="IP Address" />
+                    <button class="btn" type="submit">IP Lookup</button>
+                </form>
+                <p class="text-white">
+                    Find the geolocation of any IP address including IP version, ISP, city
+                    and country information, latitude, longitude and more.
+                </p>
+            </div>
+            <div class="ip-result">
+                <div class="ip-address">
+
+                    <img src="https://countryflagsapi.com/svg/{{data.country_code}}" class="flag base-info" />
+                    <h2 class="ip-found base-info">IP Address {{data.ip}}</h2>
+
+                    <!-- <h2 class="ip-found">IP Address {{data.ip}}</h2> -->
+                    <!-- <img src="https://countryflagsapi.com/svg/{{data.country_code}}" class="flag" /> -->
+                </div>
+                <div class="short-info text-center">
+                    <table class="table table-hover text-white">
+                        <tbody>
+                            <tr>
+                                <td>IP Version</td>
+                                <td>{{data.version}}</td>
+                            </tr>
+                            <tr>
+                                <td>Region</td>
+                                <td>{{data.region}}</td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td>{{data.city}}</td>
+                            </tr>
+                            <tr>
+                                <td>Country</td>
+                                <td>{{data.country}} | {{data.country_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div id="scroll" class="scroll scroll-section">
+        <a href="#home__all-info"><span></span>Scroll</a>
+    </div> -->
+</header>
+
+<section id="home__all-info" class="py-3 mt-5">
+    <div class="container">
+        <table class="table table-strip table-hover">
+            <tbody>
+                <tr>
+                    <td>IP Address</td>
+                    <td>{{data.ip}}</td>
+                </tr>
+                <tr>
+                    <td>IP Version</td>
+                    <td>{{data.version}}</td>
+                </tr>
+                <tr>
+                    <td>ISP</td>
+                    <td>{{data.org}}</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>{{data.city}}</td>
+                </tr>
+                <tr>
+                    <td>Postal Code</td>
+                    <td>{{data.postal}}</td>
+                </tr>
+                <tr>
+                    <td>Region</td>
+                    <td>{{data.region}}</td>
+                </tr>
+                <tr>
+                    <td>Region Code</td>
+                    <td>{{data.region_code}}</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>{{data.country_code}} | {{data.country_name}}</td>
+                </tr>
+                <tr>
+                    <td>Country Code ISO3</td>
+                    <td>{{data.country_code_iso3}}</td>
+                </tr>
+                <tr>
+                    <td>Population</td>
+                    <td>{{data.country_population}}</td>
+                </tr>
+                <tr>
+                    <td>Capital</td>
+                    <td>{{data.country_capital}}</td>
+                </tr>
+                <tr>
+                    <td>Continent</td>
+                    <td>{{data.continent_code}}</td>
+                </tr>
+                <tr>
+                    <td>Timezone</td>
+                    <td>{{data.timezone}} | {{data.utc_offset}}</td>
+                </tr>
+                <tr>
+                    <td>Country Calling Code</td>
+                    <td>{{data.country_calling_code}}</td>
+                </tr>
+                <tr>
+                    <td>Currency</td>
+                    <td>{{data.currency}} | {{data.currency_name}}</td>
+                </tr>
+                <tr>
+                    <td>TLD</td>
+                    <td>{{data.country_tld}}</td>
+                </tr>
+                <tr>
+                    <td>Language</td>
+                    <td>{{data.languages}}</td>
+                </tr>
+                <tr>
+                    <td>Latitude</td>
+                    <td>{{data.latitude}}</td>
+                </tr>
+                <tr>
+                    <td>Longitude</td>
+                    <td>{{data.longitude}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="home__map">
+    <div class="container mb-3">
+        <div id="map" width="100%" style="height: 400px"></div>
+    </div>
+</section>
+
+{% include 'components/footer.html' %}
+<!-- <script src="{% static 'js/map.js' %}"></script> -->
+<script>
+    mapboxgl.accessToken = "{{mapbox_access_token}}";
+    var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v10",
+        zoom: 9,
+        cooperativeGestures: true,
+        center: [{{ data.longitude }}, {{ data.latitude }}]
+  });
+
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    const marker1 = new mapboxgl.Marker()
+        .setLngLat([{{ data.longitude }}, {{ data.latitude }}]).addTo(map);
+</script>
+{% endblock base %}
