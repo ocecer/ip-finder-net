@@ -25,6 +25,7 @@ ipapi = "==1.0.4"
 charset-normalizer = "==2.1.0"
 idna = "==3.3"
 requests = "==2.28.1"
+pymysql = "*"
 
 [dev-packages]
 autopep8 = "*"
