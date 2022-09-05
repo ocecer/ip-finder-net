@@ -1,5 +1,3 @@
-from distutils.command.upload import upload
-from msilib.schema import Class
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
