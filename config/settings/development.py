@@ -1,6 +1,6 @@
 from .base import *
 
-ALLOWED_HOSTS = ['ip-finder.net','www.ip-finder.net']
+ALLOWED_HOSTS = []
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
