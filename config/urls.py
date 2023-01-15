@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('ipfinder.urls')),
     path('blog/', include('blog.urls')),
     path('account/', include('account.urls')),
+    path('password-generator/', include('passwordgenerator.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,7 +2,8 @@ from django.shortcuts import render
 from ipapi import location
 import environ
 
-env=environ.Env()
+env = environ.Env()
+
 
 def ipfinder(request):
     IPAPI_KEY = env("IPAPI_KEY")
@@ -25,17 +26,17 @@ def ipfinder(request):
             ip = request.META.get('REMOTE_ADDR')
             # search = ip  # Uncomment in production
 
-    data = location(ip=search, key=IPAPI_KEY, output='json')
+    context = {}
 
-    data["utc_offset"] = data["utc_offset"][:3]+":"+data["utc_offset"][3:]
+    try:
+        data = location(ip=search, key=IPAPI_KEY, output='json')
+        data["utc_offset"] = data["utc_offset"][:3]+":"+data["utc_offset"][3:]
+        # Print data for logging
+        print(data)
+        context = context.update({"data": data})
+    except Exception as e:
+        print(e)
 
-    # Print data for logging
-    print(data)
-
-    context = {"data": data}
-
-    context.update({"mapbox_access_token": mapbox_access_token})
-
-    print(context)
+    context = context.update({"mapbox_access_token": mapbox_access_token})
 
     return render(request, "pages/index.html", context)

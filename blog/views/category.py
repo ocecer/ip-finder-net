@@ -1,4 +1,4 @@
-from msilib.schema import ListView
+# from msilib.schema import ListView
 from django.shortcuts import get_object_or_404
 from blog.models import CatagoryModel
 from django.views.generic import ListView

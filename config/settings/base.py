@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from sentry_sdk.integrations.django import DjangoIntegration
-# import sentry_sdk
+import sentry_sdk
 import os
 from pathlib import Path
 from re import M
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'ipfinder',
+    'passwordgenerator',
     'ckeditor',
     "account",
     'crispy_forms',
@@ -156,18 +157,18 @@ LOGGING = {
 }
 
 
-# sentry_sdk.init(
-#     dsn=env('SENTRY_DSN'),
-#     integrations=[
-#         DjangoIntegration(),
-#     ],
+sentry_sdk.init(
+    dsn=env('SENTRY_DSN'),
+    integrations=[
+        DjangoIntegration(),
+    ],
 
-#     # Set traces_sample_rate to 1.0 to capture 100%
-#     # of transactions for performance monitoring.
-#     # We recommend adjusting this value in production.
-#     traces_sample_rate=1.0,
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
 
-#     # If you wish to associate users to errors (assuming you are using
-#     # django.contrib.auth) you may enable sending PII data.
-#     send_default_pii=True
-# )
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
